@@ -1,0 +1,46 @@
+<resources>
+    <string name="app_name">Smart Assistant</string>
+
+    <!-- App Identity -->
+    <string name="app_title">Smart Assistant</string>
+    <string name="app_subtitle_online">Online</string>
+    <string name="app_subtitle_offline">Offline</string>
+    <string name="app_subtitle_typing">AI is typing…</string>
+
+    <!-- Welcome Screen -->
+    <string name="welcome_title">Your AI Assistant</string>
+    <string name="welcome_description">Ask me anything! I\'m here to help you with questions, creative tasks, and problem-solving.</string>
+
+    <!-- Chat Input -->
+    <string name="input_placeholder">Ask me anything…</string>
+    <string name="content_desc_send">Send message</string>
+    <string name="content_desc_stop">Stop generating</string>
+    <string name="content_desc_mic">Voice input</string>
+    <string name="content_desc_add">Add action</string>
+
+    <!-- Drawers -->
+    <string name="history_title">History</string>
+    <string name="settings_title">Settings</string>
+    <string name="new_chat">New Chat</string>
+    <string name="delete">Delete</string>
+
+    <!-- Settings -->
+    <string name="setting_online_mode">Online Mode</string>
+    <string name="setting_online_desc">Using cloud AI for responses</string>
+    <string name="setting_offline_desc">Using on-device AI for responses</string>
+    <string name="setting_theme_mode">Appearance</string>
+    <string name="setting_theme_system">System default</string>
+    <string name="setting_theme_light">Light</string>
+    <string name="setting_theme_dark">Dark</string>
+
+    <!-- Suggestions -->
+    <string name="suggestion_help">What can you help me with?</string>
+    <string name="suggestion_code">Help me write code</string>
+    <string name="suggestion_explain">Explain a concept</string>
+    <string name="suggestion_brainstorm">Brainstorm ideas</string>
+    <string name="suggestion_summarize">Summarize text</string>
+    <string name="suggestion_translate">Translate something</string>
+
+    <!-- Permissions -->
+    <string name="permission_mic_required">Microphone permission is required for voice input</string>
+</resources>

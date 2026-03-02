@@ -1,0 +1,133 @@
+package com.smartassistant.app.data
+
+import android.util.Log
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import java.util.UUID
+
+// Import models from Models.kt (same package, so auto-imported)
+
+/**
+ * ============================================================================
+ * ChatRepository.kt - Single Source of Truth for Chat Data
+ * ============================================================================
+ *
+ * Manages all chat data: sessions, messages, history.
+ * Now includes local persistence to survive app kills.
+ */
+class ChatRepository(
+    private val aiSource: AiSource,
+    private val localStorage: ChatLocalStorage? = null
+) {
+
+    companion object {
+        private const val TAG = "ChatRepository"
+    }
+
+    // Session history for drawer
+    private val _sessions = MutableStateFlow<List<Session>>(emptyList())
+    val sessions: StateFlow<List<Session>> = _sessions
+
+    init {
+        restoreSessionsFromLocalStorage()
+    }
+
+    private fun restoreSessionsFromLocalStorage() {
+        // First try to load from local storage
+        val localSessions = localStorage?.loadSessions() ?: emptyList()
+        if (localSessions.isNotEmpty()) {
+            Log.d(TAG, "Loading ${localSessions.size} sessions from local storage into history drawer")
+            localSessions.forEach { chatSession ->
+                if (chatSession.messages.isNotEmpty() && !chatSession.id.startsWith("pending_")) {
+                    saveSession(Session(
+                        id = chatSession.id,
+                        title = chatSession.title,
+                        lastMessage = chatSession.messages.lastOrNull { it.sender == Sender.USER }?.text
+                    ))
+                }
+            }
+            return
+        }
+
+        // Fall back to AI source cache
+        val cached = aiSource.getCache()
+        Log.d(TAG, "Loading ${cached.size} sessions from AI cache into history drawer")
+        cached.forEach { cache ->
+            saveSession(Session(
+                id = cache.sessionId.toString(),
+                title = "Smart Assistant",
+                lastMessage = cache.queries.lastOrNull()
+            ))
+        }
+    }
+
+    /** Build message list from cached queries/responses */
+    fun buildMessagesFromCache(queries: List<String>, responses: List<String>): List<Message> {
+        val count = minOf(queries.size, responses.size)
+        return buildList {
+            for (i in 0 until count) {
+                add(Message(UUID.randomUUID().toString(), queries[i], Sender.USER))
+                add(Message(UUID.randomUUID().toString(), responses[i], Sender.AI))
+            }
+        }
+    }
+
+    // Session management
+    fun createSession() = aiSource.createSession()
+    fun destroySession(sessionId: Int) = aiSource.destroySession(sessionId)
+
+    /** Check if AI backend is ready */
+    fun isReady(): Boolean = aiSource.isReady()
+
+    fun saveSession(session: Session) {
+        _sessions.value = _sessions.value.filterNot { it.id == session.id } + session
+    }
+
+    fun deleteSession(sessionId: String) {
+        _sessions.value = _sessions.value.filterNot { it.id == sessionId }
+        sessionId.toIntOrNull()?.let { aiSource.destroySession(it) }
+    }
+
+    // Messaging
+    fun registerTokenListener(sessionId: Int, onToken: (String) -> Unit) =
+        aiSource.registerTokenListener(sessionId, onToken)
+
+    fun sendMessage(sessionId: Int, message: String) =
+        aiSource.sendMessage(sessionId, message)
+
+    fun stopGeneration(sessionId: Int) =
+        aiSource.stopGeneration(sessionId)
+
+    // Helpers
+    fun createUserMessage(text: String) = Message(
+        id = UUID.randomUUID().toString(),
+        text = text,
+        sender = Sender.USER
+    )
+
+    fun createAiPlaceholder() = Message(
+        id = UUID.randomUUID().toString(),
+        text = "",
+        sender = Sender.AI,
+        state = MessageState.TYPING,
+        isStreaming = true
+    )
+
+    fun getCache() = aiSource.getCache()
+
+    // ==================== LOCAL PERSISTENCE ====================
+
+    /**
+     * Save sessions to local storage for persistence across app kills
+     */
+    fun saveSessionsToLocal(sessions: List<ChatSessionState>) {
+        localStorage?.saveSessions(sessions)
+    }
+
+    /**
+     * Load sessions from local storage (returns empty if none saved)
+     */
+    fun loadSessionsFromLocal(): List<ChatSessionState> {
+        return localStorage?.loadSessions() ?: emptyList()
+    }
+}

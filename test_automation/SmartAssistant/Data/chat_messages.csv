@@ -1,0 +1,11 @@
+test_name,message,expected_behavior
+Simple Greeting,Hello AI,response
+Question About Weather,What is the weather today?,response
+Math Question,What is 2 + 2?,response
+Long Message,Please write a detailed explanation about how machine learning works and its applications in modern technology,response
+Special Characters,Hello! How are you? @#$%,response
+Numbers Only,12345,response
+Mixed Content,The price is $99.99 and 50% off!,response
+Multi-line Request,Can you help me with:\n1. Python basics\n2. Data structures,response
+Vietnamese,Xin chào bạn khỏe không?,response
+Technical Question,How do I implement a binary search tree in Python?,response
