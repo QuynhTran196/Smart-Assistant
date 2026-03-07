@@ -29,29 +29,19 @@ class ChatRepository(
     val sessions: StateFlow<List<Session>> = _sessions
 
     init {
-        restoreSessionsFromLocalStorage()
+        // Don't load from local storage here - getCache() is the single source of truth.
+        // The ViewModel's refreshHistoryFromCache() will populate sessions after AI initializes.
     }
 
-    private fun restoreSessionsFromLocalStorage() {
-        // First try to load from local storage
-        val localSessions = localStorage?.loadSessions() ?: emptyList()
-        if (localSessions.isNotEmpty()) {
-            Log.d(TAG, "Loading ${localSessions.size} sessions from local storage into history drawer")
-            localSessions.forEach { chatSession ->
-                if (chatSession.messages.isNotEmpty() && !chatSession.id.startsWith("pending_")) {
-                    saveSession(Session(
-                        id = chatSession.id,
-                        title = chatSession.title,
-                        lastMessage = chatSession.messages.lastOrNull { it.sender == Sender.USER }?.text
-                    ))
-                }
-            }
-            return
-        }
-
-        // Fall back to AI source cache
+    /**
+     * Populate session history from the AI backend's getCache().
+     * Only called after AI initialization completes.
+     */
+    fun restoreSessionsFromCache() {
         val cached = aiSource.getCache()
         Log.d(TAG, "Loading ${cached.size} sessions from AI cache into history drawer")
+        // Clear stale local data first
+        _sessions.value = emptyList()
         cached.forEach { cache ->
             saveSession(Session(
                 id = cache.sessionId.toString(),
@@ -129,5 +119,15 @@ class ChatRepository(
      */
     fun loadSessionsFromLocal(): List<ChatSessionState> {
         return localStorage?.loadSessions() ?: emptyList()
+    }
+
+    /**
+     * Clear all local storage and in-memory session history.
+     * Called when getCache() returns empty (database was cleared).
+     */
+    fun clearLocalStorage() {
+        localStorage?.clearAll()
+        _sessions.value = emptyList()
+        Log.d(TAG, "Cleared local storage and session history")
     }
 }

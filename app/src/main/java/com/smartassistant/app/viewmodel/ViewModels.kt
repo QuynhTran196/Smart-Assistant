@@ -52,24 +52,70 @@ class ChatViewModel(private val repository: ChatRepository) : ViewModel() {
     private var lastSpeechTime: Long = 0L  // Track last speech time for silence detection
 
     init {
-        // Load saved sessions into history (for drawer) but don't display them
-        loadHistoryInBackground()
+        // Don't load from local storage - getCache() is the single source of truth.
+        // refreshHistoryFromCache() will be called after AI initializes.
         // Always start with a fresh empty chat screen
         createFreshChat()
     }
 
+
     /**
-     * Load saved sessions for history drawer (doesn't affect current view)
+     * Refresh chat history from the AI backend's getCache() function.
+     * Called after AI initialization completes so we get the real conversation
+     * history from the database instead of stale local storage data.
      */
-    private fun loadHistoryInBackground() {
-        val localSessions = repository.loadSessionsFromLocal()
-        if (localSessions.isNotEmpty()) {
-            Log.d(TAG, "Loaded ${localSessions.size} sessions into history")
-            // Mark old LLM session IDs as invalid (-1) since they won't be valid after app restart
-            val sessionsWithInvalidLlm = localSessions.map { session ->
-                session.copy(llmSessionId = -1)
+    fun refreshHistoryFromCache() {
+        viewModelScope.launch(kotlinx.coroutines.Dispatchers.IO) {
+            if (!repository.isReady()) {
+                Log.w(TAG, "refreshHistoryFromCache: AI not ready yet")
+                return@launch
             }
-            _uiState.update { it.copy(sessions = sessionsWithInvalidLlm) }
+
+            val cached = repository.getCache()
+
+            if (cached.isEmpty()) {
+                Log.d(TAG, "refreshHistoryFromCache: cache is empty, clearing stale history")
+                // Cache is empty = database was cleared. Remove all stale sessions.
+                _uiState.update { state ->
+                    val pendingSession = state.sessions.find { it.id.startsWith("pending_") }
+                    state.copy(sessions = listOfNotNull(pendingSession))
+                }
+                // Clear local storage so stale data doesn't come back
+                repository.clearLocalStorage()
+                return@launch
+            }
+
+            Log.d(TAG, "refreshHistoryFromCache: loaded ${cached.size} sessions from AI cache")
+
+            val cachedSessions = cached.map { cache ->
+                val messages = repository.buildMessagesFromCache(cache.queries, cache.responses)
+                ChatSessionState(
+                    id = cache.sessionId.toString(),
+                    title = if (cache.queries.isNotEmpty()) cache.queries.first().take(30) else "Smart Assistant",
+                    llmSessionId = cache.sessionId,
+                    messages = messages,
+                    showWelcome = false
+                )
+            }
+
+            _uiState.update { state ->
+                // Keep the current pending session, replace old sessions with cache data
+                val pendingSession = state.sessions.find { it.id.startsWith("pending_") }
+                val allSessions = cachedSessions + listOfNotNull(pendingSession)
+                state.copy(sessions = allSessions)
+            }
+
+            // Also update the repository sessions for the history drawer
+            cachedSessions.forEach { session ->
+                repository.saveSession(Session(
+                    id = session.id,
+                    title = session.title,
+                    lastMessage = session.messages.lastOrNull { it.sender == Sender.USER }?.text
+                ))
+            }
+
+            // Update local storage with fresh cache data
+            saveToLocalStorage()
         }
     }
 
@@ -282,13 +328,19 @@ class ChatViewModel(private val repository: ChatRepository) : ViewModel() {
     }
 
     fun createNewChat() {
-        stopGeneration()
+        // Only force-stop if AI is actively generating a response
+        if (_uiState.value.isGenerating) {
+            stopGeneration()
+        }
         // Just create a fresh empty chat - LLM session created on first message
         createFreshChat()
     }
 
     fun removeChat(sessionId: String) {
-        stopGeneration()
+        // Only force-stop if AI is actively generating a response
+        if (_uiState.value.isGenerating) {
+            stopGeneration()
+        }
         val session = _uiState.value.sessions.find { it.id == sessionId }
 
         // Only destroy LLM session if it was actually created (not pending)
@@ -309,7 +361,10 @@ class ChatViewModel(private val repository: ChatRepository) : ViewModel() {
     }
 
     fun selectSession(sessionId: String) {
-        stopGeneration()
+        // Only force-stop if AI is actively generating a response
+        if (_uiState.value.isGenerating) {
+            stopGeneration()
+        }
         _uiState.update { it.copy(currentSessionId = sessionId) }
     }
 

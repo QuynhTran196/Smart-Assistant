@@ -52,6 +52,7 @@ import com.smartassistant.app.data.Session
 import com.smartassistant.app.ui.components.*
 import com.smartassistant.app.ui.theme.BarlowFontFamily
 import com.smartassistant.app.ui.theme.SmartAssistantTheme
+import com.smartassistant.app.ui.theme.LocalThemeState
 import com.smartassistant.app.ui.theme.UserBubbleShape
 import com.smartassistant.app.ui.theme.AiBubbleShape
 import com.smartassistant.app.viewmodel.ChatViewModel
@@ -74,6 +75,15 @@ fun ChatScreen(aiSource: AiSource) {
     var showHistory by remember { mutableStateOf(false) }
     var showSettings by remember { mutableStateOf(false) }
     var isOnline by remember { mutableStateOf(true) }
+
+    // After AI backend initializes, refresh history from getCache() (the real database)
+    LaunchedEffect(aiSource) {
+        // Poll until AI is ready, then fetch cached conversations
+        while (!aiSource.isReady()) {
+            kotlinx.coroutines.delay(500L)
+        }
+        chatVm.refreshHistoryFromCache()
+    }
 
     val listState = rememberLazyListState()
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -627,6 +637,7 @@ private fun HistorySessionItem(
 @Composable
 fun SettingsDrawer(isOnline: Boolean, onOnlineChange: (Boolean) -> Unit) {
     val hapticFeedback = LocalHapticFeedback.current
+    val themeState = LocalThemeState.current
 
     Surface(
         modifier = Modifier
@@ -667,6 +678,29 @@ fun SettingsDrawer(isOnline: Boolean, onOnlineChange: (Boolean) -> Unit) {
                     .fillMaxWidth()
                     .padding(16.dp)
             ) {
+                // Dark Mode Setting Item
+                SettingsItem(
+                    title = "Dark Mode",
+                    description = if (themeState.isDarkMode) "Dark theme is enabled" else "Light theme is enabled",
+                    trailing = {
+                        Switch(
+                            checked = themeState.isDarkMode,
+                            onCheckedChange = {
+                                hapticFeedback.performHapticFeedback(HapticFeedbackType.LongPress)
+                                themeState.updateDarkMode(it)
+                            },
+                            colors = SwitchDefaults.colors(
+                                checkedThumbColor = MaterialTheme.colorScheme.onPrimary,
+                                checkedTrackColor = MaterialTheme.colorScheme.primary,
+                                uncheckedThumbColor = MaterialTheme.colorScheme.outline,
+                                uncheckedTrackColor = MaterialTheme.colorScheme.surfaceVariant
+                            )
+                        )
+                    }
+                )
+
+                Spacer(modifier = Modifier.height(8.dp))
+
                 // Online Mode Setting Item
                 SettingsItem(
                     title = "Online Mode",

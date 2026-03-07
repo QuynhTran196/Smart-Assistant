@@ -5,11 +5,14 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import com.smartassistant.app.data.AiSource
 import com.smartassistant.app.ui.ChatScreen
+import com.smartassistant.app.ui.theme.LocalThemeState
 import com.smartassistant.app.ui.theme.SmartAssistantTheme
+import com.smartassistant.app.ui.theme.rememberThemeState
 
 /**
  * ============================================================================
@@ -21,8 +24,12 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            SmartAssistantTheme {
-                App()
+            val themeState = rememberThemeState()
+
+            CompositionLocalProvider(LocalThemeState provides themeState) {
+                SmartAssistantTheme(darkTheme = themeState.isDarkMode) {
+                    App()
+                }
             }
         }
     }
