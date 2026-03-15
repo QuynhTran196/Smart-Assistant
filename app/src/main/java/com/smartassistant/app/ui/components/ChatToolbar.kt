@@ -43,33 +43,33 @@ fun ChatToolbar(
 
             IconButton(
                 onClick = onHistoryClick,
-                modifier = Modifier.size(40.dp)
+                modifier = Modifier
+                    .size(40.dp)
+                    .semantics(mergeDescendants = true) {
+                        contentDescription = "chat_history_button"
+                    }
             ) {
                 Icon(
                     imageVector = Icons.Default.Menu,
                     contentDescription = null,
                     tint = extendedColors.iconTint,
-                    modifier = Modifier
-                        .size(24.dp)
-                        .semantics {
-                            contentDescription = "chat_history_button"
-                        }
+                    modifier = Modifier.size(24.dp)
                 )
             }
 
             IconButton(
                 onClick = onSettingsClick,
-                modifier = Modifier.size(40.dp)
+                modifier = Modifier
+                    .size(40.dp)
+                    .semantics(mergeDescendants = true) {
+                        contentDescription = "chat_settings_button"
+                    }
             ) {
                 Icon(
                     imageVector = Icons.Default.Settings,
                     contentDescription = null,
                     tint = extendedColors.iconTint,
-                    modifier = Modifier
-                        .size(24.dp)
-                        .semantics {
-                            contentDescription = "chat_settings_button"
-                        }
+                    modifier = Modifier.size(24.dp)
                 )
             }
         }

@@ -8,14 +8,14 @@ Resource    ChatPage.resource
 # HISTORY DRAWER
 # =============================================================================
 ${HISTORY_DRAWER}              accessibility_id=history_drawer
-${HISTORY_DRAWER_TITLE}        xpath=//*[contains(@text, 'History')]
+${HISTORY_DRAWER_TITLE}        xpath=//*[contains(@text, 'HISTORY')]
 ${DRAWER_NEW_CHAT_BUTTON}      accessibility_id=history_drawer_new_chat_button
 ${HISTORY_SESSION_ITEM}        accessibility_id=history_session_item
 ${HISTORY_DELETE_BUTTON}       accessibility_id=history_delete_button
 
 # Dynamic locators (use with Format String)
-${HISTORY_ITEM_BY_INDEX}       xpath=(//android.view.View[@content-desc='history_session_item'])[%s]
-${HISTORY_DELETE_BY_INDEX}     xpath=(//android.view.View[@content-desc='history_delete_button'])[%s]
+${HISTORY_ITEM_BY_INDEX}       xpath=(//android.view.View[@content-desc='history_session_item'])[{}]
+${HISTORY_DELETE_BY_INDEX}     xpath=(//android.view.View[@content-desc='history_delete_button'])[{}]
 
 *** Keywords ***
 # =============================================================================

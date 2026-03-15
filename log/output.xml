@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.3.2 (Python 3.13.3 on win32)" generated="2026-03-15T00:41:58.448911" rpa="false" schemaversion="5">
+<suite id="s1" name="Chat Tests" source="C:\Users\PC\Documents\Smart_Assistant\test_automation\SmartAssistant\Tests\Functional\chat_tests.robot">
+<test id="s1-t1" name="TC_CHAT_003 - Send Multiple Messages" line="32">
+<kw name="Start Chat Application" owner="Common" type="SETUP">
+<kw name="Open Application" owner="AppiumLibrary">
+<arg>${APPIUM_SERVER}</arg>
+<arg>automationName=${ANDROID_AUTOMATION_NAME}</arg>
+<arg>platformName=${ANDROID_PLATFORM_NAME}</arg>
+<arg>deviceName=${DEVICE_NAME}</arg>
+<arg>appPackage=${APP_PACKAGE}</arg>
+<arg>appActivity=${APP_ACTIVITY}</arg>
+<doc>Opens a new application to given Appium server.
+Capabilities of appium server, Android and iOS,
+Please check https://appium.io/docs/en/2.19/guides/caps/
+| *Option*            | *Man.* | *Description*     |
+| remote_url          | Yes    | Appium server url |
+| alias               | No     | alias             |</doc>
+<status status="PASS" start="2026-03-15T00:41:59.025331" elapsed="12.286130"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-03-15T00:42:13.313494" level="INFO">Slept 2 seconds.</msg>
+<msg time="2026-03-15T00:42:13.323735" level="INFO">Exception ignored in: &lt;_io.BufferedWriter name=-1&gt;
+Traceback (most recent call last):
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python313\Lib\socket.py", line 737, in write
+    return self._sock.send(b)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host</msg>
+<msg time="2026-03-15T00:42:13.325130" level="FAIL">OSError: [Errno 22] Invalid argument</msg>
+<arg>2s</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="FAIL" start="2026-03-15T00:42:11.312132" elapsed="2.024921">OSError: [Errno 22] Invalid argument</status>
+</kw>
+<doc>Launches the Smart Assistant app</doc>
+<status status="FAIL" start="2026-03-15T00:41:59.023851" elapsed="14.314187">OSError: [Errno 22] Invalid argument</status>
+</kw>
+<kw name="Close Chat Application" owner="Common" type="TEARDOWN">
+<kw name="Run Keyword If Test Failed" owner="BuiltIn">
+<kw name="Capture Page Screenshot" owner="AppiumLibrary">
+<kw name="Capture Page Screenshot" owner="AppiumLibrary">
+<msg time="2026-03-15T00:42:13.383804" level="FAIL">WebDriverException: Message: 'GET /screenshot' cannot be proxied to UiAutomator2 server because the instrumentation process is not running (probably crashed). Check the server log and/or the logcat output for more details
+Stacktrace:
+UnknownError: 'GET /screenshot' cannot be proxied to UiAutomator2 server because the instrumentation process is not running (probably crashed). Check the server log and/or the logcat output for more details
+    at UIA2Proxy.command (C:\Users\PC\AppData\Roaming\npm\node_modules\appium\node_modules\@appium\base-driver\lib\jsonwp-proxy\proxy.js:336:13)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at AndroidUiautomator2Driver.getScreenshot (C:\Users\PC\.appium\node_modules\appium-uiautomator2-driver\lib\commands\screenshot.js:42:5)</msg>
+<doc>Takes a screenshot of the current page and embeds it into the log.</doc>
+<status status="FAIL" start="2026-03-15T00:42:13.373000" elapsed="0.023171">WebDriverException: Message: 'GET /screenshot' cannot be proxied to UiAutomator2 server because the instrumentation process is not running (probably crashed). Check the server log and/or the logcat output for more details
+Stacktrace:
+UnknownError: 'GET /screenshot' cannot be proxied to UiAutomator2 server because the instrumentation process is not running (probably crashed). Check the server log and/or the logcat output for more details
+    at UIA2Proxy.command (C:\Users\PC\AppData\Roaming\npm\node_modules\appium\node_modules\@appium\base-driver\lib\jsonwp-proxy\proxy.js:336:13)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at AndroidUiautomator2Driver.getScreenshot (C:\Users\PC\.appium\node_modules\appium-uiautomator2-driver\lib\commands\screenshot.js:42:5)</status>
+</kw>
+<msg time="2026-03-15T00:42:13.401447" level="WARN">Keyword 'Capture Page Screenshot' could not be run on failure: WebDriverException: Message: 'GET /screenshot' cannot be proxied to UiAutomator2 server because the instrumentation process is not running (probably crashed). Check the server log and/or the logcat output for more details
+Stacktrace:
+UnknownError: 'GET /screenshot' cannot be proxied to UiAutomator2 server because the instrumentation process is not running (probably crashed). Check the server log and/or the logcat output for more details
+    at UIA2Proxy.command (C:\Users\PC\AppData\Roaming\npm\node_modules\appium\node_modules\@appium\base-driver\lib\jsonwp-proxy\proxy.js:336:13)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at AndroidUiautomator2Driver.getScreenshot (C:\Users\PC\.appium\node_modules\appium-uiautomator2-driver\lib\commands\screenshot.js:42:5)</msg>
+<msg time="2026-03-15T00:42:13.402941" level="FAIL">WebDriverException: Message: 'GET /screenshot' cannot be proxied to UiAutomator2 server because the instrumentation process is not running (probably crashed). Check the server log and/or the logcat output for more details
+Stacktrace:
+UnknownError: 'GET /screenshot' cannot be proxied to UiAutomator2 server because the instrumentation process is not running (probably crashed). Check the server log and/or the logcat output for more details
+    at UIA2Proxy.command (C:\Users\PC\AppData\Roaming\npm\node_modules\appium\node_modules\@appium\base-driver\lib\jsonwp-proxy\proxy.js:336:13)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at AndroidUiautomator2Driver.getScreenshot (C:\Users\PC\.appium\node_modules\appium-uiautomator2-driver\lib\commands\screenshot.js:42:5)</msg>
+<arg>filename=FAIL_${TEST_NAME}.png</arg>
+<doc>Takes a screenshot of the current page and embeds it into the log.</doc>
+<status status="FAIL" start="2026-03-15T00:42:13.343484" elapsed="0.062649">WebDriverException: Message: 'GET /screenshot' cannot be proxied to UiAutomator2 server because the instrumentation process is not running (probably crashed). Check the server log and/or the logcat output for more details
+Stacktrace:
+UnknownError: 'GET /screenshot' cannot be proxied to UiAutomator2 server because the instrumentation process is not running (probably crashed). Check the server log and/or the logcat output for more details
+    at UIA2Proxy.command (C:\Users\PC\AppData\Roaming\npm\node_modules\appium\node_modules\@appium\base-driver\lib\jsonwp-proxy\proxy.js:336:13)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at AndroidUiautomator2Driver.getScreenshot (C:\Users\PC\.appium\node_modules\appium-uiautomator2-driver\lib\commands\screenshot.js:42:5)</status>
+</kw>
+<arg>Capture Page Screenshot</arg>
+<arg>filename=FAIL_${TEST_NAME}.png</arg>
+<doc>Runs the given keyword with the given arguments, if the test failed.</doc>
+<status status="FAIL" start="2026-03-15T00:42:13.342243" elapsed="0.064138">WebDriverException: Message: 'GET /screenshot' cannot be proxied to UiAutomator2 server because the instrumentation process is not running (probably crashed). Check the server log and/or the logcat output for more details
+Stacktrace:
+UnknownError: 'GET /screenshot' cannot be proxied to UiAutomator2 server because the instrumentation process is not running (probably crashed). Check the server log and/or the logcat output for more details
+    at UIA2Proxy.command (C:\Users\PC\AppData\Roaming\npm\node_modules\appium\node_modules\@appium\base-driver\lib\jsonwp-proxy\proxy.js:336:13)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at AndroidUiautomator2Driver.getScreenshot (C:\Users\PC\.appium\node_modules\appium-uiautomator2-driver\lib\commands\screenshot.js:42:5)</status>
+</kw>
+<kw name="Close Application" owner="AppiumLibrary">
+<doc>Closes the current application and also close webdriver session.</doc>
+<status status="PASS" start="2026-03-15T00:42:13.406713" elapsed="2.030125"/>
+</kw>
+<doc>Closes the app and captures screenshot on failure</doc>
+<status status="FAIL" start="2026-03-15T00:42:13.339492" elapsed="2.097848">WebDriverException: Message: 'GET /screenshot' cannot be proxied to UiAutomator2 server because the instrumentation process is not running (probably crashed). Check the server log and/or the logcat output for more details
+Stacktrace:
+UnknownError: 'GET /screenshot' cannot be proxied to UiAutomator2 server because the instrumentation process is not running (probably crashed). Check the server log and/or the logcat output for more details
+    at UIA2Proxy.command (C:\Users\PC\AppData\Roaming\npm\node_modules\appium\node_modules\@appium\base-driver\lib\jsonwp-proxy\proxy.js:336:13)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at AndroidUiautomator2Driver.getScreenshot (C:\Users\PC\.appium\node_modules\appium-uiautomator2-driver\lib\commands\screenshot.js:42:5)</status>
+</kw>
+<doc>User sends multiple messages in sequence</doc>
+<tag>chat</tag>
+<tag>functional</tag>
+<tag>regression</tag>
+<status status="FAIL" start="2026-03-15T00:41:59.015788" elapsed="16.421707">Setup failed:
+OSError: [Errno 22] Invalid argument
+
+Also teardown failed:
+WebDriverException: Message: 'GET /screenshot' cannot be proxied to UiAutomator2 server because the instrumentation process is not running (probably crashed). Check the server log and/or the logcat output for more details
+Stacktrace:
+UnknownError: 'GET /screenshot' cannot be proxied to UiAutomator2 server because the instrumentation process is not running (probably crashed). Check the server log and/or the logcat output for more details
+    at UIA2Proxy.command (C:\Users\PC\AppData\Roaming\npm\node_modules\appium\node_modules\@appium\base-driver\lib\jsonwp-proxy\proxy.js:336:13)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at AndroidUiautomator2Driver.getScreenshot (C:\Users\PC\.appium\node_modules\appium-uiautomator2-driver\lib\commands\screenshot.js:42:5)</status>
+</test>
+<doc>Functional tests for Chat features
+Tests the main chat functionality of Smart Assistant</doc>
+<status status="FAIL" start="2026-03-15T00:41:58.472064" elapsed="16.966064"/>
+</suite>
+<statistics>
+<total>
+<stat pass="0" fail="1" skip="0">All Tests</stat>
+</total>
+<tag>
+<stat pass="0" fail="1" skip="0">chat</stat>
+<stat pass="0" fail="1" skip="0">functional</stat>
+<stat pass="0" fail="1" skip="0">regression</stat>
+</tag>
+<suite>
+<stat name="Chat Tests" id="s1" pass="0" fail="1" skip="0">Chat Tests</stat>
+</suite>
+</statistics>
+<errors>
+<msg time="2026-03-15T00:42:13.401447" level="WARN">Keyword 'Capture Page Screenshot' could not be run on failure: WebDriverException: Message: 'GET /screenshot' cannot be proxied to UiAutomator2 server because the instrumentation process is not running (probably crashed). Check the server log and/or the logcat output for more details
+Stacktrace:
+UnknownError: 'GET /screenshot' cannot be proxied to UiAutomator2 server because the instrumentation process is not running (probably crashed). Check the server log and/or the logcat output for more details
+    at UIA2Proxy.command (C:\Users\PC\AppData\Roaming\npm\node_modules\appium\node_modules\@appium\base-driver\lib\jsonwp-proxy\proxy.js:336:13)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at AndroidUiautomator2Driver.getScreenshot (C:\Users\PC\.appium\node_modules\appium-uiautomator2-driver\lib\commands\screenshot.js:42:5)</msg>
+</errors>
+</robot>

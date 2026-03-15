@@ -93,7 +93,7 @@ TC_SETTINGS_009 - Verify Settings UI Elements
     [Documentation]    All settings UI elements should be present
     [Tags]             functional    settings    regression
     Open Settings Drawer
-    Verify Text Is Displayed    Settings
+    Verify Text Is Displayed    SETTINGS
     Verify Text Is Displayed    Online Mode
     # One of these should be visible
     ${is_online}=    Run Keyword And Return Status

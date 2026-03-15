@@ -92,7 +92,7 @@ fun ChatInput(
                     shape = InputFieldShape,
                     spotColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.15f)
                 )
-                .semantics(mergeDescendants = true) {
+                .semantics(mergeDescendants = false) {
                     contentDescription = "chat_input_field"
                 },
             shape = InputFieldShape,
@@ -103,7 +103,7 @@ fun ChatInput(
             TextField(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .semantics(mergeDescendants = true) {
+                    .semantics(mergeDescendants = false) {
                         contentDescription = "text_input"
                     },
                 value = inputText,
@@ -130,14 +130,15 @@ fun ChatInput(
                         modifier = Modifier
                             .size(40.dp)
                             .semantics(mergeDescendants = true) {
-                                contentDescription = "add_button"
+                                contentDescription = "chat_add_button"
                             }
                     ) {
                         Icon(
                             imageVector = Icons.Default.Add,
                             contentDescription = "Add",
                             tint = extendedColors.iconTint,
-                            modifier = Modifier.size(22.dp)
+                            modifier = Modifier
+                                .size(22.dp)
                         )
                     }
                 },
@@ -155,7 +156,7 @@ fun ChatInput(
                                 modifier = Modifier
                                     .size(36.dp)
                                     .semantics(mergeDescendants = true) {
-                                        contentDescription = "mic_button"
+                                        contentDescription = "chat_mic_button"
                                     },
                             )
                         }

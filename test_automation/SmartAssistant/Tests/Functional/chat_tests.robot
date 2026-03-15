@@ -119,12 +119,11 @@ TC_CHAT_011 - Rapid Message Sending
     [Documentation]    User sends messages rapidly
     [Tags]             functional    chat    stress
     User Sends A Message    Quick message 1
-    Sleep    1s
-    User Sends A Message    Quick message 2
-    Sleep    1s
-    User Sends A Message    Quick message 3
-    # Wait for all responses
-    Sleep    30s
     Verify Message Is Displayed    Quick message 1
+    Verify AI Response Received
+    User Sends A Message    Quick message 2
     Verify Message Is Displayed    Quick message 2
+    Verify AI Response Received
+    User Sends A Message    Quick message 3
     Verify Message Is Displayed    Quick message 3
+    Verify AI Response Received

@@ -105,11 +105,11 @@ Wait For App To Stabilize
 
 Scroll Down
     [Documentation]    Scrolls down on the screen
-    Swipe    500    1500    500    500    1000
+    Execute Script    mobile: swipeGesture    {"left": 100, "top": 500, "width": 800, "height": 1000, "direction": "up", "percent": 0.75}
 
 Scroll Up
     [Documentation]    Scrolls up on the screen
-    Swipe    500    500    500    1500    1000
+    Execute Script    mobile: swipeGesture    {"left": 100, "top": 500, "width": 800, "height": 1000, "direction": "down", "percent": 0.75}
 
 Take Debug Screenshot
     [Documentation]    Captures screenshot for debugging

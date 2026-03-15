@@ -15,6 +15,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import com.smartassistant.app.ui.theme.BarlowFontFamily
 
 // mic effects
@@ -25,7 +27,10 @@ fun VoiceListeningOverlay(visible: Boolean) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Black.copy(alpha = 0.35f)),
+            .background(Color.Black.copy(alpha = 0.35f))
+            .semantics(mergeDescendants = false) {
+                contentDescription = "voice_listening_overlay"
+            },
         contentAlignment = BiasAlignment(
             horizontalBias = 0f,
             verticalBias = -0.33f   // đẩy lên ~2/3 phía trên

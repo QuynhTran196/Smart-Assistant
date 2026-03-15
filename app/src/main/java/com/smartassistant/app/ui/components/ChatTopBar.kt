@@ -72,7 +72,10 @@ fun ChatTopBar(
                     fontWeight = FontWeight.SemiBold,
                     color = MaterialTheme.colorScheme.primary,
                     maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.semantics {
+                        contentDescription = "chat_top_bar_title"
+                    }
                 )
 
                 // Status subtitle

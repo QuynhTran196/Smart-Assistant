@@ -8,6 +8,8 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.material3.Text
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
 
@@ -39,6 +41,8 @@ fun ListeningDots(
         }.joinToString(" "),
         fontSize = 20.sp,
         color = Color.White,  // White for visibility on dark overlay
-        modifier = modifier
+        modifier = modifier.semantics {
+            contentDescription = "listening_dots"
+        }
     )
 }

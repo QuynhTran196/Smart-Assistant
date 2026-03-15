@@ -9,7 +9,7 @@ Resource         ChatPage.resource
 # SETTINGS DRAWER
 # =============================================================================
 ${SETTINGS_DRAWER}             accessibility_id=settings_drawer
-${SETTINGS_TITLE}              xpath=//*[contains(@text, 'Settings')]
+${SETTINGS_TITLE}              xpath=//*[contains(@text, 'SETTINGS')]
 ${ONLINE_MODE_SWITCH}          accessibility_id=online_mode_switch
 ${ONLINE_MODE_LABEL}           xpath=//*[contains(@text, 'Online Mode')]
 ${CLOUD_AI_TEXT}               xpath=//*[contains(@text, 'Using cloud AI')]

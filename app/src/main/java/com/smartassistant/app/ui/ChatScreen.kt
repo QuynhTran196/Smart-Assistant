@@ -33,6 +33,8 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.IntOffset
@@ -246,7 +248,10 @@ fun ChatScreen(aiSource: AiSource) {
                 state = listState,
                 modifier = Modifier
                     .weight(1f)
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
+                    .semantics {
+                        contentDescription = "chat_message_list"
+                    },
                 contentPadding = PaddingValues(top = 8.dp, bottom = 16.dp),
                 reverseLayout = false
             ) {
@@ -404,7 +409,11 @@ fun MessageBubbleNew(message: Message) {
             color = if (isUser) extendedColors.userBubble else extendedColors.aiBubble,
             tonalElevation = if (isUser) 0.dp else 1.dp,
             shadowElevation = if (isUser) 2.dp else 1.dp,
-            modifier = Modifier.widthIn(max = 300.dp)
+            modifier = Modifier
+                .widthIn(max = 300.dp)
+                .semantics {
+                    contentDescription = if (isUser) "user_message" else "ai_message"
+                }
         ) {
             Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)) {
                 if (message.attachments.isNotEmpty()) {
@@ -450,7 +459,10 @@ fun HistoryDrawer(
         modifier = Modifier
             .fillMaxHeight()
             .navigationBarsPadding()
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .semantics(mergeDescendants = false) {
+                contentDescription = "history_drawer"
+            },
         color = MaterialTheme.colorScheme.surface,
         tonalElevation = 4.dp
     ) {
@@ -480,7 +492,11 @@ fun HistoryDrawer(
                         hapticFeedback.performHapticFeedback(HapticFeedbackType.LongPress)
                         onNewChat()
                     },
-                    modifier = Modifier.size(40.dp)
+                    modifier = Modifier
+                        .size(40.dp)
+                        .semantics(mergeDescendants = true) {
+                            contentDescription = "history_drawer_new_chat_button"
+                        }
                 ) {
                     Icon(
                         imageVector = Icons.Default.Add,
@@ -580,6 +596,9 @@ private fun HistorySessionItem(
             .fillMaxWidth()
             .scale(scale)
             .background(backgroundColor)
+            .semantics(mergeDescendants = false) {
+                contentDescription = "history_session_item"
+            }
             .clickable(
                 interactionSource = interactionSource,
                 indication = ripple(color = MaterialTheme.colorScheme.primary.copy(alpha = 0.12f))
@@ -616,7 +635,11 @@ private fun HistorySessionItem(
         // Delete button
         IconButton(
             onClick = onDelete,
-            modifier = Modifier.size(40.dp)
+            modifier = Modifier
+                .size(40.dp)
+                .semantics(mergeDescendants = true) {
+                    contentDescription = "history_delete_button"
+                }
         ) {
             Icon(
                 imageVector = Icons.Default.Delete,
@@ -642,7 +665,10 @@ fun SettingsDrawer(isOnline: Boolean, onOnlineChange: (Boolean) -> Unit) {
     Surface(
         modifier = Modifier
             .fillMaxHeight()
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .semantics(mergeDescendants = false) {
+                contentDescription = "settings_drawer"
+            },
         color = MaterialTheme.colorScheme.surface,
         tonalElevation = 4.dp
     ) {
@@ -711,6 +737,9 @@ fun SettingsDrawer(isOnline: Boolean, onOnlineChange: (Boolean) -> Unit) {
                             onCheckedChange = {
                                 hapticFeedback.performHapticFeedback(HapticFeedbackType.LongPress)
                                 onOnlineChange(it)
+                            },
+                            modifier = Modifier.semantics {
+                                contentDescription = "online_mode_switch"
                             },
                             colors = SwitchDefaults.colors(
                                 checkedThumbColor = MaterialTheme.colorScheme.onPrimary,

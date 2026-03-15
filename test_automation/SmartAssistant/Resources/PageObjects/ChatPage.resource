@@ -143,16 +143,6 @@ Select New Chat Option
     [Documentation]    Selects new chat from add dialog
     Smart Click    ${NEW_CHAT_OPTION}
 
-# =============================================================================
-# TOOLBAR KEYWORDS
-# =============================================================================
-Open History Drawer
-    [Documentation]    Opens the history drawer from toolbar
-    Smart Click    ${HISTORY_BUTTON}
-
-Open Settings Drawer
-    [Documentation]    Opens the settings drawer from toolbar
-    Smart Click    ${SETTINGS_BUTTON}
 
 # =============================================================================
 # ATTACHMENT KEYWORDS

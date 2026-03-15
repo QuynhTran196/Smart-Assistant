@@ -15,6 +15,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -49,7 +51,10 @@ fun PendingAttachmentsRow(
         attachments.forEach { attachment ->
             AttachmentChip(
                 attachment = attachment,
-                onRemove = { onRemove(attachment.id) }
+                onRemove = { onRemove(attachment.id) },
+                modifier = Modifier.semantics {
+                    contentDescription = "pending_attachment"
+                }
             )
         }
     }
@@ -118,7 +123,11 @@ fun AttachmentChip(
             if (onRemove != null) {
                 IconButton(
                     onClick = onRemove,
-                    modifier = Modifier.size(24.dp)
+                    modifier = Modifier
+                        .size(24.dp)
+                        .semantics(mergeDescendants = true) {
+                            contentDescription = "remove_attachment"
+                        }
                 ) {
                     Icon(
                         imageVector = Icons.Default.Close,

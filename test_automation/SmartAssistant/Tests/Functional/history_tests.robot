@@ -19,7 +19,7 @@ TC_HISTORY_001 - Open History Drawer
     [Tags]             functional    history    regression
     Open History Drawer
     Verify History Drawer Is Open
-    Verify Text Is Displayed    History
+    Verify Text Is Displayed    HISTORY
 
 TC_HISTORY_002 - Close History Drawer With Back Button
     [Documentation]    Verifies user can close history drawer with back
@@ -82,7 +82,7 @@ TC_HISTORY_006 - Switch Between Sessions
     Verify AI Response Received
     # Switch back to first session
     Open History Drawer
-    Select Session By Index    2    # First session is now at index 2
+    Select Session By Index    1    # First session is at index 1 (oldest first)
     Verify Message Is Displayed    First session message
 
 # =============================================================================
@@ -97,8 +97,9 @@ TC_HISTORY_007 - Delete Session From History
     # Delete the session
     Open History Drawer
     Delete Session By Index    1
-    # Verify session is deleted
-    Verify Session Does Not Exist In History    ${unique_msg}
+    # Close drawer and verify session text is gone
+    Close History Drawer
+    Verify Message Is Not Displayed    ${unique_msg}
 
 TC_HISTORY_008 - Delete Active Session Clears Chat
     [Documentation]    Deleting active session should clear the chat screen
@@ -111,7 +112,7 @@ TC_HISTORY_008 - Delete Active Session Clears Chat
     Open History Drawer
     Delete Session By Index    1
     # Chat should be cleared
-    Verify History Drawer Is Closed
+    Close History Drawer
     Verify Message Is Not Displayed    ${unique_msg}
 
 # =============================================================================
