@@ -1,6 +1,3 @@
-# Common Setup, Teardown, and App Launching
-# Purpose: Handles opening and closing the app
-
 *** Settings ***
 Documentation    Common setup, teardown, and utility keywords
 Library          AppiumLibrary
@@ -8,14 +5,6 @@ Library          String
 Library          Collections
 Resource         ../Config/config.resource
 
-*** Variables ***
-# Configuration Constants
-${ANDROID_AUTOMATION_NAME}    UiAutomator2
-${ANDROID_PLATFORM_NAME}      Android
-${DEVICE_NAME}                X25B00039
-${APP_PACKAGE}                com.smartassistant.app
-${APP_ACTIVITY}               com.smartassistant.app.MainActivity
-${APPIUM_SERVER}              http://127.0.0.1:4723
 
 *** Keywords ***
 # =============================================================================

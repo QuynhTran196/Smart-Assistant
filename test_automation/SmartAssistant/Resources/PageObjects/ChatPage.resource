@@ -1,9 +1,7 @@
-# Purpose: This file contains the Locators (the IDs you found in Appium Inspector) and Keywords specific to the Chat Screen
-
 *** Settings ***
 Documentation    Chat Page locators and keywords
 Library    AppiumLibrary
-Resource    ../Common.resource  # Import Common to get Smart Keywords
+Resource    ../Common.resource
 
 *** Variables ***
 # =============================================================================

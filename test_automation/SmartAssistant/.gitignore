@@ -1,0 +1,20 @@
+# IDE files
+.idea/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Robot Framework cache
+.robotcode_cache/
+
+# Virtual environment
+.venv/
+
+# Test results
+results/
+output.xml
+log.html
+report.html
+*.png
