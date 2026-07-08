@@ -1,8 +1,24 @@
 # Smart Assistant
 
-A modern Android AI Chat application built with **Jetpack Compose** and **Material 3** following **MVVM architecture**.
+> ⚠️ Personal Demo Version
+
+This repository is a personal recreation inspired by a freelance Android chatbot project.
+
+The original client project is confidential and cannot be shared.
+
+This demo showcases my Android development and testing experience using a redesigned UI, non-confidential assets, and a simplified implementation.
+
+**Responsibilities**
+- UI/UX Design (Figma)
+- Android Development (Kotlin, Jetpack Compose, MVVM)
+- Manual Testing
+- Robot Framework & Appium UI Automation
 
 ---
+
+A modern Android AI Chat application built with **Jetpack Compose** and **Material 3** following **MVVM architecture**.
+
+
 
 ## 📋 Table of Contents
 

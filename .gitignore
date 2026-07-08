@@ -13,3 +13,6 @@
 .externalNativeBuild
 .cxx
 local.properties
+ai-agent-sdk.jar
+*.jar
+!gradle/wrapper/gradle-wrapper.jar
